@@ -1,9 +1,12 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "github.com/Yamase7/go-tutorial/greetings"
+)
 
-import "rsc.io/quote"
-
-func main() {
-    fmt.Println(quote.Go())
+func main(){
+    // 挨拶のメッセージをもらって、出力をする
+    message := greetings.Hello("Gladys")
+    fmt.Println(message)
 }
