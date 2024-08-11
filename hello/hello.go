@@ -13,7 +13,8 @@ func main() {
     log.SetFlags(0)
 
     // あいさつを要求.
-    message, err := greetings.Hello("")
+    message, err := greetings.Hello("Gladys")
+    
     // エラーが返ってきたらエラーログをコンソールに出力してプログラムを終了する。
     if err != nil {
         log.Fatal(err)
