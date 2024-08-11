@@ -12,14 +12,17 @@ func main() {
     log.SetPrefix("greetings: ")
     log.SetFlags(0)
 
-    // あいさつを要求.
-    message, err := greetings.Hello("Gladys")
-    
+    // 名前のスライスを作成
+    names := []string{"Gladys", "Samantha", "Darria"}
+
+    // 複数の名前であいさつを要求.
+    messages, err := greetings.Hellos(names)
+
     // エラーが返ってきたらエラーログをコンソールに出力してプログラムを終了する。
     if err != nil {
         log.Fatal(err)
     }
 
     // エラーがなければ受け取ったメッセージを返す。
-    fmt.Println(message)
+    fmt.Println(messages)
 }
