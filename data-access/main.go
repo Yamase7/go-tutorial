@@ -56,6 +56,13 @@ func main() {
 	}
 
 	fmt.Printf("Albums found: %v\n", albums)
+
+	// クエリーをテストするために、ID 2をハードコードする。
+	alb, err := albumByID(2)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Album found: %v\n", alb)
 }
 
 // 指定したアーティスト名を持つアルバムを検索します。
@@ -83,4 +90,19 @@ func albumsByArtist(name string) ([]Album, error) {
 	}
 
 	return albums, nil
+}
+
+// 指定されたIDのアルバムを検索する
+func albumByID(id int64) (Album, error) {
+	// 取得した行のデータを保持するアルバム.
+	var alb Album
+
+	row := db.QueryRow("SELECT * FROM album WHERE id = $1", id)
+	if err := row.Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price); err != nil {
+		if err == sql.ErrNoRows {
+			return alb, fmt.Errorf("albumsById %d: no such album", id)
+		}
+		return alb, fmt.Errorf("albumsById %d: %v", id, err)
+	}
+	return alb, nil
 }
