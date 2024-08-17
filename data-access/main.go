@@ -63,6 +63,17 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("Album found: %v\n", alb)
+
+	addData := Album{
+		Title:  "The Modern Sound of Betty Carter",
+		Artist: "Betty Carter",
+		Price:  49.99,
+	}
+	err = addAlbum(addData)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Added album: %v\n", addData)
 }
 
 // 指定したアーティスト名を持つアルバムを検索します。
@@ -105,4 +116,17 @@ func albumByID(id int64) (Album, error) {
 		return alb, fmt.Errorf("albumsById %d: %v", id, err)
 	}
 	return alb, nil
+}
+
+// 指定されたアルバムをデータベースに追加し、新しいエントリーのアルバムIDを返す。
+func addAlbum(alb Album) error {
+	_, err := db.Exec("INSERT INTO album (title, artist, price) VALUES ($1, $2, $3)", alb.Title, alb.Artist, alb.Price)
+	if err != nil {
+		return fmt.Errorf("addAlbum: %v", err)
+	}
+	// id, err = result.LastInsertId()
+	// if err != nil {
+	//     return fmt.Errorf("addAlbum: %v", err)
+	// }
+	return nil
 }
